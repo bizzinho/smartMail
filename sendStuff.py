@@ -27,7 +27,6 @@ COLUMNS = [
     "Order Number",
     "Customer Name",
     "Payment Status",
-
 ]
 # email subject
 SUBJECT = "Planned Deliveries smart"
@@ -62,7 +61,9 @@ def sendMail(
     mail.Subject = SUBJECT
 
     # read from template file
-    with open(os.path.dirname(__file__) + "\\" + "emailTemplate.txt", "r", encoding="utf-8") as f:
+    with open(
+        os.path.dirname(__file__) + "\\" + "emailTemplate.txt", "r", encoding="utf-8"
+    ) as f:
         body = f.read()
 
     # set the body of the message
@@ -123,7 +124,10 @@ if __name__ == "__main__":
                     df_agents["Agent"] == agent, "1st Contact"
                 ].values[0]
 
-                name1, name2 = df_agents.loc[df_agents["Agent"] == agent, "2nd Contact"].values[0], df_agents.loc[df_agents["Agent"] == agent, "3rd Contact"].values[0]
+                name1, name2 = (
+                    df_agents.loc[df_agents["Agent"] == agent, "2nd Contact"].values[0],
+                    df_agents.loc[df_agents["Agent"] == agent, "3rd Contact"].values[0],
+                )
                 ccs = f"{name1};{name2}"
 
                 target["cc"] = ccs
@@ -135,6 +139,6 @@ if __name__ == "__main__":
                 sys.exit()
 
             sendMail(filename, target=target)
-            #break
+            # break
         else:
             print(f"{agent} did not have any new orders.")
